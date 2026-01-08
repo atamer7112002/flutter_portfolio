@@ -6,28 +6,42 @@ class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key});
 
   final List<Map<String, dynamic>> skills = const [
+    // Core
     {'name': 'Flutter', 'icon': Icons.flutter_dash},
     {'name': 'Dart', 'icon': Icons.code},
+    {'name': 'Cross-Platform Mobile', 'icon': Icons.devices},
+
+    // Architecture & State Management
     {'name': 'Clean Architecture', 'icon': Icons.architecture},
-    {'name': 'MVVM Pattern', 'icon': Icons.view_module},
+    {'name': 'MVVM', 'icon': Icons.view_module},
     {'name': 'Repository Pattern', 'icon': Icons.layers},
-    {'name': 'BLoC/Cubit', 'icon': Icons.settings_input_component},
-    {'name': 'GetX', 'icon': Icons.terminal},
-    {'name': 'Firebase', 'icon': Icons.local_fire_department},
-    {'name': 'Cloud Firestore', 'icon': Icons.cloud},
-    {'name': 'Firebase Auth', 'icon': Icons.security},
-    {'name': 'Firebase Storage', 'icon': Icons.storage},
+    {'name': 'BLoC', 'icon': Icons.settings_input_component},
+    {'name': 'Cubit', 'icon': Icons.settings_input_component},
+
+    // UI/UX
+    {'name': 'Responsive UI', 'icon': Icons.devices},
+    {'name': 'Material Design', 'icon': Icons.palette},
+    {'name': 'Custom Animations', 'icon': Icons.animation},
+    {'name': 'Theme Management', 'icon': Icons.color_lens},
+    {'name': 'Figma', 'icon': Icons.design_services},
+
+    // Backend & Data
     {'name': 'RESTful APIs', 'icon': Icons.api},
+    {'name': 'Firebase Auth', 'icon': Icons.security},
+    {'name': 'Firestore', 'icon': Icons.cloud},
+    {'name': 'Firebase Storage', 'icon': Icons.storage},
     {'name': 'JSON Parsing', 'icon': Icons.data_object},
+
+    // Local Storage
     {'name': 'Hive', 'icon': Icons.storage},
     {'name': 'Shared Preferences', 'icon': Icons.save},
+
+    // Tools
     {'name': 'Git & GitHub', 'icon': Icons.code},
     {'name': 'Postman', 'icon': Icons.send},
     {'name': 'Android Studio', 'icon': Icons.android},
     {'name': 'VS Code', 'icon': Icons.code_off},
-    {'name': 'Responsive UI', 'icon': Icons.devices},
-    {'name': 'Material Design', 'icon': Icons.palette},
-    {'name': 'Custom Animations', 'icon': Icons.animation},
+    {'name': 'CI/CD', 'icon': Icons.build},
   ];
 
   @override

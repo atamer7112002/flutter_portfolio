@@ -207,7 +207,7 @@ class _HeroSectionState extends State<HeroSection>
             child: FadeTransition(
               opacity: _bioFade,
               child: Text(
-                'Results-driven Flutter Developer with 2 years of professional experience building high-performance cross-platform mobile applications. Expert in Flutter, Dart, Clean Architecture, and state management solutions. Proven track record of optimizing app performance, delivering scalable solutions, and implementing pixel-perfect UI/UX designs. Strong background in Agile development, RESTful APIs, Firebase integration.',
+                'Flutter Developer with 2 years of experience building scalable mobile applications using Clean Architecture and BLoC. Actively developing production-ready apps with strong expertise in API integration and UI/UX implementation.',
                 style: GoogleFonts.poppins(
                   fontSize: 18,
                   color: const Color(0xFF8892b0),
@@ -317,7 +317,7 @@ class _HeroSectionState extends State<HeroSection>
             child: FadeTransition(
               opacity: _bioFade,
               child: Text(
-                'Results-driven Flutter Developer with 2 years of professional experience building high-performance cross-platform mobile applications. Expert in Flutter, Dart, Clean Architecture, and state management solutions. Proven track record of optimizing app performance, delivering scalable solutions, and implementing pixel-perfect UI/UX designs.',
+                'Flutter Developer with 2 years of experience building scalable mobile applications using Clean Architecture and BLoC. Actively developing production-ready apps with strong expertise in API integration and UI/UX implementation.',
                 style: GoogleFonts.poppins(
                   fontSize: 16,
                   color: const Color(0xFF8892b0),

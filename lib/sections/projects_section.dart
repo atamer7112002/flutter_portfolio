@@ -9,9 +9,17 @@ class ProjectsSection extends StatelessWidget {
 
   final List<Map<String, dynamic>> projects = const [
     {
-      'title': 'Nexus Books App',
+      'title': 'Wahag Al-Elm App',
       'description':
-          'Book discovery app with browsing and search features using Flutter, Dio, Google Books API, BLoC/Cubit, and GetIt.',
+          'Developed the Flutter UI for an educational mobile application with responsive design and reusable components. Currently implementing REST API integration and data handling for performance and stability.',
+      'tech': ['Flutter', 'REST APIs', 'Responsive UI', 'Data Management'],
+      'github': 'https://github.com/atamer7112002/wahag_elelm',
+      'status': 'In Progress',
+    },
+    {
+      'title': 'Nexus App',
+      'description':
+          'Built a book browsing and search application using Flutter, Dio, Google Books API, and BLoC/Cubit. Implemented Clean Architecture and dependency injection (GetIt) for scalable and maintainable code.',
       'tech': ['Flutter', 'Dio', 'Google Books API', 'BLoC/Cubit', 'GetIt'],
       'github': 'https://github.com/atamer7112002/Nexus_book_app',
       'status': 'In Progress',
@@ -19,7 +27,7 @@ class ProjectsSection extends StatelessWidget {
     {
       'title': 'RASID Mobile App',
       'description':
-          'Enterprise workforce management app built with Flutter using Clean Architecture, BLoC/Cubit, REST APIs, and Firebase.',
+          'Developed an enterprise workforce management application using Flutter, Clean Architecture, and BLoC/Cubit. Integrated REST APIs and Firebase services for authentication, storage, and real-time updates.',
       'tech': [
         'Flutter',
         'Clean Architecture',
@@ -31,34 +39,32 @@ class ProjectsSection extends StatelessWidget {
       'status': 'Company Project',
     },
     {
-      'title': 'Renting System App',
+      'title': 'Renting System Application',
       'description':
-          'Property renting app with search feature built using Flutter, REST APIs, and responsive UI.',
-      'tech': ['Flutter', 'REST APIs', 'Responsive UI'],
+          'Developed a Flutter-based property renting app with responsive UI and structured navigation. Integrated RESTful APIs to fetch real-time property data and implemented property search and filtering features.',
+      'tech': ['Flutter', 'REST APIs', 'Shared Preferences', 'Responsive UI'],
       'github': 'https://github.com/atamer7112002/Renting_system_app',
       'status': 'Completed',
     },
     {
-      'title': 'Tick Notes App',
+      'title': 'Pura Store',
       'description':
-          'Offline-first note-taking app developed with Flutter, Hive, and BLoC/Cubit.',
-      'tech': ['Flutter', 'Hive', 'BLoC/Cubit'],
-      'github': 'https://github.com/atamer7112002/tick_notes_app',
-      'status': 'Completed',
-    },
-    {
-      'title': 'Pura Store App',
-      'description':
-          'E-commerce mobile app with product management built using Flutter, REST APIs, Dio, and state management.',
-      'tech': ['Flutter', 'REST APIs', 'Dio', 'State Management'],
+          'Developed a Flutter application to display and edit products with CRUD operations. Practiced REST API integration and backend communication for data management with creative, responsive UI.',
+      'tech': ['Flutter', 'REST APIs', 'CRUD Operations', 'Responsive UI'],
       'github': 'https://github.com/atamer7112002/pura_store_app',
       'status': 'Completed',
     },
     {
-      'title': 'Nebula Chat App',
+      'title': 'Nebula Chat',
       'description':
-          'Real-time messaging app implemented with Flutter, Firebase Authentication, Firestore, and Firebase Storage.',
-      'tech': ['Flutter', 'Firebase Auth', 'Firestore', 'Firebase Storage'],
+          'Built a real-time chat application using Flutter and Firebase for messaging, authentication, and media handling. Implemented Cubit-based state management and offline support for stable connectivity.',
+      'tech': [
+        'Flutter',
+        'Firebase Auth',
+        'Firestore',
+        'Firebase Storage',
+        'Cubit',
+      ],
       'github': 'https://github.com/atamer7112002/nebula_chat_app',
       'status': 'Completed',
     },
@@ -136,12 +142,12 @@ class ProjectsSection extends StatelessWidget {
           color: const Color(0xFF112240),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: const Color(0xFF64ffda).withOpacity(0.1),
+            color: const Color(0xFF64ffda).withValues(alpha: 0.1),
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF64ffda).withOpacity(0.1),
+              color: const Color(0xFF64ffda).withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),

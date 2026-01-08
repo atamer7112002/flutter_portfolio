@@ -67,7 +67,7 @@ class AboutSection extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Text(
-                'I specialize in Clean Architecture, state management solutions (BLoC, Cubit, GetX), and creating pixel-perfect UI/UX designs. My professional journey includes improving app performance by 35% and achieving 95% crash-free rates through debugging best practices.',
+                'I specialize in Clean Architecture, state management solutions (BLoC, Cubit, GetX), and creating pixel-perfect UI/UX designs. Proven track record of optimizing app performance, delivering scalable solutions, and implementing pixel-perfect UI/UX designs.',
                 style: GoogleFonts.poppins(
                   fontSize: 18,
                   color: const Color(0xFF8892b0),
@@ -76,16 +76,7 @@ class AboutSection extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Text(
-                'With a solid background in UI/UX design and a Bachelor\'s degree in Computer Science from Suez Canal University, I bring both technical expertise and design sensibility to every project.',
-                style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  color: const Color(0xFF8892b0),
-                  height: 1.8,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'Currently serving in the Egyptian Armed Forces with "Excellent Conduct" distinction, I continue to stay updated with the latest technologies and AI-assisted development tools.',
+                'With a solid background in UI/UX design and a Bachelor\'s degree in Computer Science from Suez Canal University, I bring both technical expertise and design sensibility to every project. Strong background in Agile development, RESTful APIs, and Firebase integration.',
                 style: GoogleFonts.poppins(
                   fontSize: 18,
                   color: const Color(0xFF8892b0),
@@ -116,7 +107,7 @@ class AboutSection extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         Text(
-          'I specialize in Clean Architecture, state management solutions (BLoC, Cubit, GetX), and creating pixel-perfect UI/UX designs. My professional journey includes improving app performance by 35% and achieving 95% crash-free rates.',
+          'I specialize in Clean Architecture, state management solutions (BLoC, Cubit, GetX), and creating pixel-perfect UI/UX designs. Proven track record of optimizing app performance, delivering scalable solutions, and implementing pixel-perfect UI/UX designs.',
           style: GoogleFonts.poppins(
             fontSize: 16,
             color: const Color(0xFF8892b0),
