@@ -24,6 +24,8 @@ class SkillsSection extends StatelessWidget {
     {'name': 'Custom Animations', 'icon': Icons.animation},
     {'name': 'Theme Management', 'icon': Icons.color_lens},
     {'name': 'Figma', 'icon': Icons.design_services},
+    {'name': 'Design Specs', 'icon': Icons.style},
+    {'name': 'Component-based UI', 'icon': Icons.widgets},
 
     // Backend & Data
     {'name': 'RESTful APIs', 'icon': Icons.api},

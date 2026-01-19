@@ -69,7 +69,6 @@ class ExperienceSection extends StatelessWidget {
           location: 'Cairo, Egypt',
           achievements: [
             'Develop and maintain Flutter features using Clean Architecture and Cubit-based state management.',
-            'Collaborate with cross-functional remote teams in an Agile workflow using Git and GitHub.',
             'Participate in code reviews to improve code quality, consistency, and maintainability.',
             'Implement REST API integrations following best practices for scalability and performance.',
           ],
@@ -136,7 +135,6 @@ class ExperienceSection extends StatelessWidget {
           location: 'Cairo, Egypt',
           achievements: [
             'Develop and maintain Flutter features using Clean Architecture and Cubit-based state management.',
-            'Collaborate with cross-functional remote teams in an Agile workflow using Git and GitHub.',
             'Participate in code reviews to improve code quality, consistency, and maintainability.',
             'Implement REST API integrations following best practices for scalability and performance.',
           ],

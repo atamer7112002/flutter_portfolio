@@ -138,7 +138,7 @@ class ContactSection extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Text(
-          '© 2025 All rights reserved',
+          '© 2026 All rights reserved',
           style: GoogleFonts.poppins(
             fontSize: 12,
             color: const Color(0xFF8892b0),
