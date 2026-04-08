@@ -1,51 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import '../utils/constants.dart';
 import '../utils/responsive_layout.dart';
 
 class NavBar extends StatefulWidget {
-  final ItemScrollController itemScrollController;
+  final Function(int) onNavTap;
+  final int currentIndex;
 
-  const NavBar({super.key, required this.itemScrollController});
+  const NavBar({super.key, required this.onNavTap, required this.currentIndex});
 
   @override
   State<NavBar> createState() => _NavBarState();
 }
 
 class _NavBarState extends State<NavBar> {
-  bool isScrolled = false;
-  int selectedIndex = 0;
-
-  final List<String> navItems = [
+  final List<String> _navItems = [
     'Home',
     'About',
     'Skills',
+    'Projects',
     'Experience',
     'Education',
     'Certifications',
-    'Projects',
     'Contact',
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    // Listen to scroll events to change navbar background
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Add scroll listener here if needed
-    });
-  }
-
-  void _scrollToSection(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-    widget.itemScrollController.scrollTo(
-      index: index,
-      duration: const Duration(milliseconds: 600),
-      curve: Curves.easeInOut,
-    );
-  }
+  int? _hoveredIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -57,102 +37,101 @@ class _NavBarState extends State<NavBar> {
 
   Widget _buildDesktopNavBar() {
     return Container(
-      height: 80,
+      height: AppSpacing.navHeight,
       padding: const EdgeInsets.symmetric(horizontal: 50),
       decoration: BoxDecoration(
-        color: const Color(0xFF0a192f).withOpacity(0.95),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
+        color: AppColors.background.withValues(alpha: 0.92),
+        border: const Border(
+          bottom: BorderSide(color: AppColors.border, width: 1),
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Logo/Name
-          Text(
-            'Ahmed Tamer',
-            style: GoogleFonts.poppins(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xFF64ffda),
-            ),
-          ),
-          // Navigation Items
+          _buildLogo(),
           Row(
-            children: List.generate(
-              navItems.length,
-              (index) => _buildNavItem(navItems[index], index),
-            ),
+            children: [
+              // Only show key nav items on desktop
+              ..._buildDesktopNavItems(),
+              const SizedBox(width: 20),
+              _buildThemeToggle(),
+            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _buildMobileNavBar() {
-    return Container(
-      height: 70,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(
-        color: const Color(0xFF0a192f).withOpacity(0.95),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'AT',
-            style: GoogleFonts.poppins(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xFF64ffda),
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.menu, color: Color(0xFF64ffda)),
-            onPressed: () => _showMobileMenu(context),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavItem(String title, int index) {
-    final isSelected = selectedIndex == index;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: InkWell(
-        onTap: () => _scrollToSection(index),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              title,
+  List<Widget> _buildDesktopNavItems() {
+    // Show: About(1), Skills(2), Projects(3), Experience(4), Contact(7)
+    const displayItems = [
+      {'label': 'About', 'index': 1},
+      {'label': 'Skills', 'index': 2},
+      {'label': 'Projects', 'index': 3},
+      {'label': 'Experience', 'index': 4},
+      {'label': 'Contact', 'index': 7},
+    ];
+    return displayItems.map((item) {
+      final index = item['index'] as int;
+      final label = item['label'] as String;
+      final isActive = widget.currentIndex == index;
+      final isHovered = _hoveredIndex == index;
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (_) => setState(() => _hoveredIndex = index),
+          onExit: (_) => setState(() => _hoveredIndex = null),
+          child: GestureDetector(
+            onTap: () => widget.onNavTap(index),
+            child: Text(
+              label,
               style: GoogleFonts.poppins(
-                fontSize: 16,
+                fontSize: 15,
                 fontWeight: FontWeight.w500,
-                color: isSelected
-                    ? const Color(0xFF64ffda)
-                    : const Color(0xFFccd6f6),
+                color: isActive || isHovered
+                    ? AppColors.textPrimary
+                    : AppColors.textSecondary,
               ),
             ),
-            const SizedBox(height: 5),
+          ),
+        ),
+      );
+    }).toList();
+  }
+
+  Widget _buildLogo() {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => widget.onNavTap(0),
+        child: Row(
+          children: [
             Container(
-              height: 2,
-              width: isSelected ? 40 : 0,
+              width: 36,
+              height: 36,
               decoration: BoxDecoration(
-                color: const Color(0xFF64ffda),
-                borderRadius: BorderRadius.circular(2),
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Text(
+                  'A',
+                  style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.background,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Text(
+              'Ahmed.',
+              style: GoogleFonts.poppins(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
               ),
             ),
           ],
@@ -161,38 +140,118 @@ class _NavBarState extends State<NavBar> {
     );
   }
 
+  Widget _buildThemeToggle() {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.border, width: 1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: const Icon(
+        Icons.wb_sunny_outlined,
+        color: AppColors.textSecondary,
+        size: 20,
+      ),
+    );
+  }
+
+  Widget _buildMobileNavBar() {
+    return Container(
+      height: 60,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      decoration: BoxDecoration(
+        color: AppColors.background.withValues(alpha: 0.95),
+        border: const Border(
+          bottom: BorderSide(color: AppColors.border, width: 1),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _buildLogo(),
+          IconButton(
+            icon: const Icon(Icons.menu, color: AppColors.primary, size: 28),
+            onPressed: () => _showMobileMenu(context),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _showMobileMenu(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: const Color(0xFF0a192f),
+      backgroundColor: AppColors.cardBackground,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) => Container(
-        padding: const EdgeInsets.symmetric(vertical: 30),
+        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: List.generate(
-            navItems.length,
-            (index) => ListTile(
-              title: Text(
-                navItems[index],
-                style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: selectedIndex == index
-                      ? const Color(0xFF64ffda)
-                      : const Color(0xFFccd6f6),
-                ),
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              margin: const EdgeInsets.only(bottom: 20),
+              decoration: BoxDecoration(
+                color: AppColors.textMuted,
+                borderRadius: BorderRadius.circular(2),
               ),
-              onTap: () {
-                Navigator.pop(context);
-                _scrollToSection(index);
-              },
             ),
-          ),
+            ...List.generate(
+              _navItems.length,
+              (index) => ListTile(
+                title: Text(
+                  _navItems[index],
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: widget.currentIndex == index
+                        ? AppColors.primary
+                        : AppColors.textSecondary,
+                  ),
+                ),
+                leading: Icon(
+                  _getNavIcon(index),
+                  color: widget.currentIndex == index
+                      ? AppColors.primary
+                      : AppColors.textMuted,
+                  size: 22,
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  widget.onNavTap(index);
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  IconData _getNavIcon(int index) {
+    switch (index) {
+      case 0:
+        return Icons.home_outlined;
+      case 1:
+        return Icons.person_outline;
+      case 2:
+        return Icons.code;
+      case 3:
+        return Icons.work_outline;
+      case 4:
+        return Icons.timeline;
+      case 5:
+        return Icons.school_outlined;
+      case 6:
+        return Icons.verified_outlined;
+      case 7:
+        return Icons.mail_outline;
+      default:
+        return Icons.circle;
+    }
   }
 }

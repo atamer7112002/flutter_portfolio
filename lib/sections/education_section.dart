@@ -1,185 +1,228 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:visibility_detector/visibility_detector.dart';
+import '../utils/constants.dart';
 import '../utils/responsive_layout.dart';
 
-class EducationSection extends StatelessWidget {
+class EducationSection extends StatefulWidget {
   const EducationSection({super.key});
 
   @override
+  State<EducationSection> createState() => _EducationSectionState();
+}
+
+class _EducationSectionState extends State<EducationSection>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  bool _hasAnimated = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onVisibilityChanged(VisibilityInfo info) {
+    if (info.visibleFraction > 0.2 && !_hasAnimated) {
+      _hasAnimated = true;
+      _controller.forward();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: Responsive.getValue(context, mobile: 30, desktop: 100),
-        vertical: 80,
+    return VisibilityDetector(
+      key: const Key('education-section'),
+      onVisibilityChanged: _onVisibilityChanged,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: Responsive.getValue(
+            context,
+            mobile: AppSpacing.sectionHorizontalMobile,
+            desktop: AppSpacing.sectionHorizontalDesktop,
+          ),
+          vertical: AppSpacing.sectionVertical,
+        ),
+        child: Column(
+          children: [
+            _buildSectionHeader(),
+            const SizedBox(height: 50),
+            _buildEducationCard(
+              title: 'Bachelor of Computer Science',
+              institution:
+                  'Faculty of Computers and Informatics — Suez Canal University',
+              location: 'Ismailia, Egypt',
+              period: '2020 – 2024',
+              icon: Icons.school,
+            ),
+            const SizedBox(height: 24),
+            _buildEducationCard(
+              title: 'Mobile Development (Cross-Platform & iOS)',
+              institution: 'Information Technology Institute (ITI)',
+              location: 'Ismailia, Egypt',
+              period: '2022 – 2024',
+              icon: Icons.developer_mode,
+            ),
+          ],
+        ),
       ),
-      decoration: BoxDecoration(
-        color: const Color(0xFF112240).withOpacity(0.3),
+    );
+  }
+
+  Widget _buildSectionHeader() {
+    return FadeTransition(
+      opacity: CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.0, 0.5, curve: Curves.easeOut),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSectionTitle('Education'),
-          const SizedBox(height: 60),
-          ResponsiveLayout(
-            mobile: _buildMobileEducation(),
-            desktop: _buildDesktopEducation(),
+          Text(
+            'EDUCATION',
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 3,
+              color: AppColors.badgeGreen,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'Academic Background',
+            style: GoogleFonts.poppins(
+              fontSize: 36,
+              fontWeight: FontWeight.bold,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Container(
+            width: 60,
+            height: 4,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.circular(2),
+            ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildSectionTitle(String title) {
-    return Row(
-      children: [
-        Text(
-          title,
-          style: GoogleFonts.poppins(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-            color: const Color(0xFFccd6f6),
-          ),
-        ),
-        const SizedBox(width: 20),
-        Expanded(
-          child: Container(
-            height: 1,
-            color: const Color(0xFF8892b0).withOpacity(0.3),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDesktopEducation() {
-    return Center(
-      child: _buildEducationCard(
-        title: 'Bachelor of Computer Science',
-        organization: 'Suez Canal University',
-        period: '2020 - 2024',
-        location: 'Ismailia, Egypt',
-        details: ['Faculty of Computers and Informatics', 'Graduated 2024'],
-      ),
-    );
-  }
-
-  Widget _buildMobileEducation() {
-    return _buildEducationCard(
-      title: 'Bachelor of Computer Science',
-      organization: 'Suez Canal University',
-      period: '2020 - 2024',
-      location: 'Ismailia, Egypt',
-      details: ['Faculty of Computers and Informatics', 'Graduated 2024'],
     );
   }
 
   Widget _buildEducationCard({
     required String title,
-    required String organization,
-    required String period,
+    required String institution,
     required String location,
-    required List<String> details,
+    required String period,
+    required IconData icon,
   }) {
-    return Container(
-      constraints: const BoxConstraints(maxWidth: 800),
-      padding: const EdgeInsets.all(30),
-      decoration: BoxDecoration(
-        color: const Color(0xFF112240),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: const Color(0xFF64ffda).withOpacity(0.1),
-          width: 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF64ffda).withOpacity(0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
+    return FadeTransition(
+      opacity: CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.3, 0.9, curve: Curves.easeOut),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+      child: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 800),
+          padding: const EdgeInsets.all(32),
+          decoration: BoxDecoration(
+            color: AppColors.cardBackground,
+            borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
+            border: Border.all(color: AppColors.border),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: 0.05),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: Row(
             children: [
-              const Icon(Icons.school, color: Color(0xFF64ffda), size: 40),
-              const SizedBox(width: 15),
+              // Icon
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: AppColors.secondary.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Icon(
+                  icon,
+                  color: AppColors.secondary,
+                  size: 30,
+                ),
+              ),
+              const SizedBox(width: 24),
+              // Content
               Expanded(
-                child: Text(
-                  title,
-                  style: GoogleFonts.poppins(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: const Color(0xFFccd6f6),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          Text(
-            organization,
-            style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: const Color(0xFF64ffda),
-            ),
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              const Icon(
-                Icons.calendar_today,
-                color: Color(0xFF8892b0),
-                size: 16,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                period,
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  color: const Color(0xFF8892b0),
-                ),
-              ),
-              const SizedBox(width: 20),
-              const Icon(Icons.location_on, color: Color(0xFF8892b0), size: 16),
-              const SizedBox(width: 8),
-              Text(
-                location,
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  color: const Color(0xFF8892b0),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          ...details.map(
-            (detail) => Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    '▹ ',
-                    style: TextStyle(color: Color(0xFF64ffda), fontSize: 20),
-                  ),
-                  Expanded(
-                    child: Text(
-                      detail,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
                       style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        color: const Color(0xFF8892b0),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      institution,
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      location,
+                      style: GoogleFonts.poppins(
+                        fontSize: 13,
+                        color: AppColors.textSecondary,
                         height: 1.5,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+              const SizedBox(width: 20),
+              // Date badge
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: AppColors.primary.withValues(alpha: 0.3),
+                  ),
+                ),
+                child: Text(
+                  period,
+                  style: GoogleFonts.poppins(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

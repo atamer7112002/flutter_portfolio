@@ -31,21 +31,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-  
-  # Google Fonts for Poppins typography
   google_fonts: ^6.2.1
-  
-  # URL launcher for external links
   url_launcher: ^6.3.1
-  
-  # Scrollable positioned list for smooth navigation
-  scrollable_positioned_list: ^0.3.8
-  
-  # Font Awesome icons
   font_awesome_flutter: ^10.7.0
+  visibility_detector: ^0.4.0+2
 
 dev_dependencies:
   flutter_test:

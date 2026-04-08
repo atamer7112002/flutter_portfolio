@@ -1,160 +1,266 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:visibility_detector/visibility_detector.dart';
+import '../utils/constants.dart';
 import '../utils/responsive_layout.dart';
 
-class CertificationsSection extends StatelessWidget {
+class CertificationsSection extends StatefulWidget {
   const CertificationsSection({super.key});
 
-  final List<Map<String, String>> certifications = const [
+  @override
+  State<CertificationsSection> createState() => _CertificationsSectionState();
+}
+
+class _CertificationsSectionState extends State<CertificationsSection>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  bool _hasAnimated = false;
+
+  final List<Map<String, String>> _certifications = const [
     {
       'title': 'CS50x: Introduction to Computer Science',
       'issuer': 'Harvard University',
       'year': '2022',
+      'icon': '🎓',
     },
     {
-      'title': 'Flutter Certification',
+      'title': 'Flutter Development Certification',
       'issuer': 'Google Developer Student Clubs (GDSC)',
       'year': '2023',
+      'icon': '🏆',
     },
-    {'title': 'Flutter Development Guide', 'issuer': 'Udemy', 'year': '2023'},
+    {
+      'title': 'Flutter Development Guide',
+      'issuer': 'Udemy',
+      'year': '2023',
+      'icon': '📱',
+    },
     {
       'title': 'Mobile Development (iOS)',
       'issuer': 'Information Technology Institute (ITI)',
       'year': '2022',
+      'icon': '📋',
     },
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onVisibilityChanged(VisibilityInfo info) {
+    if (info.visibleFraction > 0.2 && !_hasAnimated) {
+      _hasAnimated = true;
+      _controller.forward();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: Responsive.getValue(context, mobile: 30, desktop: 100),
-        vertical: 80,
+    return VisibilityDetector(
+      key: const Key('certifications-section'),
+      onVisibilityChanged: _onVisibilityChanged,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: Responsive.getValue(
+            context,
+            mobile: AppSpacing.sectionHorizontalMobile,
+            desktop: AppSpacing.sectionHorizontalDesktop,
+          ),
+          vertical: AppSpacing.sectionVertical,
+        ),
+        color: AppColors.surfaceDark,
+        child: Column(
+          children: [
+            _buildSectionHeader(),
+            const SizedBox(height: 50),
+            _buildCertGrid(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader() {
+    return FadeTransition(
+      opacity: CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.0, 0.4, curve: Curves.easeOut),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSectionTitle('Certifications'),
-          const SizedBox(height: 60),
-          _buildCertificationsGrid(context),
+          Text(
+            'CERTIFICATIONS',
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 3,
+              color: AppColors.badgePurple,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'Professional Credentials',
+            style: GoogleFonts.poppins(
+              fontSize: 36,
+              fontWeight: FontWeight.bold,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Container(
+            width: 60,
+            height: 4,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildSectionTitle(String title) {
-    return Row(
-      children: [
-        Text(
-          title,
-          style: GoogleFonts.poppins(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-            color: const Color(0xFFccd6f6),
-          ),
-        ),
-        const SizedBox(width: 20),
-        Expanded(
-          child: Container(
-            height: 1,
-            color: const Color(0xFF8892b0).withOpacity(0.3),
-          ),
-        ),
-      ],
+  Widget _buildCertGrid() {
+    final crossAxisCount = Responsive.getValue(
+      context,
+      mobile: 1,
+      tablet: 2,
+      desktop: 2,
     );
-  }
-
-  Widget _buildCertificationsGrid(BuildContext context) {
-    final crossAxisCount = Responsive.getValue(context, mobile: 1, desktop: 2);
 
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
-        crossAxisSpacing: 30,
-        mainAxisSpacing: 30,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
         childAspectRatio: Responsive.getValue(
           context,
-          mobile: 1.8,
-          desktop: 3.0,
+          mobile: 2.5,
+          desktop: 3.5,
         ),
       ),
-      itemCount: certifications.length,
+      itemCount: _certifications.length,
       itemBuilder: (context, index) {
-        return _buildCertificationCard(certifications[index]);
+        return _CertCard(cert: _certifications[index]);
       },
     );
   }
+}
 
-  Widget _buildCertificationCard(Map<String, String> cert) {
-    return Container(
-      padding: const EdgeInsets.all(25),
-      decoration: BoxDecoration(
-        color: const Color(0xFF112240),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: const Color(0xFF64ffda).withOpacity(0.1),
-          width: 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF64ffda).withOpacity(0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+class _CertCard extends StatefulWidget {
+  final Map<String, String> cert;
+
+  const _CertCard({required this.cert});
+
+  @override
+  State<_CertCard> createState() => _CertCardState();
+}
+
+class _CertCardState extends State<_CertCard> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: AppColors.cardBackground,
+          borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
+          border: Border.all(
+            color: _isHovered
+                ? AppColors.primary.withValues(alpha: 0.3)
+                : AppColors.border,
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            children: [
-              const Icon(Icons.verified, color: Color(0xFF64ffda), size: 28),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  cert['title']!,
-                  style: GoogleFonts.poppins(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: const Color(0xFFccd6f6),
+          boxShadow: _isHovered
+              ? [
+                  BoxShadow(
+                    color: AppColors.primary.withValues(alpha: 0.08),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                ]
+              : [],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                child: Text(
+                  widget.cert['icon']!,
+                  style: const TextStyle(fontSize: 22),
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            cert['issuer']!,
-            style: GoogleFonts.poppins(
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-              color: const Color(0xFF64ffda),
             ),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              const Icon(
-                Icons.calendar_today,
-                color: Color(0xFF8892b0),
-                size: 14,
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    widget.cert['title']!,
+                    style: GoogleFonts.poppins(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    widget.cert['issuer']!,
+                    style: GoogleFonts.poppins(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 6),
-              Text(
-                cert['year']!,
+            ),
+            const SizedBox(width: 12),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                widget.cert['year']!,
                 style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  color: const Color(0xFF8892b0),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primary,
                 ),
               ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
