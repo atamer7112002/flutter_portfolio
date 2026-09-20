@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../utils/constants.dart';
 import '../utils/responsive_layout.dart';
@@ -34,7 +33,11 @@ class _EducationSectionState extends State<EducationSection>
   void _onVisibilityChanged(VisibilityInfo info) {
     if (info.visibleFraction > 0.2 && !_hasAnimated) {
       _hasAnimated = true;
-      _controller.forward();
+      if (MediaQuery.disableAnimationsOf(context)) {
+        _controller.value = 1;
+      } else {
+        _controller.forward();
+      }
     }
   }
 
@@ -61,7 +64,7 @@ class _EducationSectionState extends State<EducationSection>
               institution:
                   'Faculty of Computers and Informatics — Suez Canal University',
               location: 'Ismailia, Egypt',
-              period: '2020 – 2024',
+              period: 'Sep 2019 – 2024',
               icon: Icons.school,
             ),
             const SizedBox(height: 24),
@@ -88,7 +91,7 @@ class _EducationSectionState extends State<EducationSection>
         children: [
           Text(
             'EDUCATION',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
               letterSpacing: 3,
@@ -98,7 +101,7 @@ class _EducationSectionState extends State<EducationSection>
           const SizedBox(height: 12),
           Text(
             'Academic Background',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
@@ -170,7 +173,7 @@ class _EducationSectionState extends State<EducationSection>
                   children: [
                     Text(
                       title,
-                      style: GoogleFonts.poppins(
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
@@ -179,7 +182,7 @@ class _EducationSectionState extends State<EducationSection>
                     const SizedBox(height: 6),
                     Text(
                       institution,
-                      style: GoogleFonts.poppins(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: AppColors.primary,
@@ -188,7 +191,7 @@ class _EducationSectionState extends State<EducationSection>
                     const SizedBox(height: 8),
                     Text(
                       location,
-                      style: GoogleFonts.poppins(
+                      style: TextStyle(
                         fontSize: 13,
                         color: AppColors.textSecondary,
                         height: 1.5,
@@ -213,7 +216,7 @@ class _EducationSectionState extends State<EducationSection>
                 ),
                 child: Text(
                   period,
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                     color: AppColors.primary,

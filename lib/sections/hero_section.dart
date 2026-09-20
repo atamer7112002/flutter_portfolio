@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../utils/constants.dart';
 import '../utils/responsive_layout.dart';
-import '../widgets/particle_background.dart';
 
 class HeroSection extends StatefulWidget {
   final VoidCallback? onViewWork;
@@ -16,16 +14,14 @@ class HeroSection extends StatefulWidget {
 }
 
 class _HeroSectionState extends State<HeroSection>
-    with TickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   late AnimationController _fadeController;
-  late AnimationController _scrollIndicatorController;
   late Animation<double> _badgeFade;
   late Animation<double> _nameFade;
   late Animation<double> _titleFade;
   late Animation<double> _bioFade;
   late Animation<double> _buttonsFade;
   late Animation<double> _imageFade;
-  late Animation<double> _scrollBounce;
 
   @override
   void initState() {
@@ -73,34 +69,37 @@ class _HeroSectionState extends State<HeroSection>
       ),
     );
 
-    _scrollIndicatorController = AnimationController(
-      duration: const Duration(milliseconds: 1500),
-      vsync: this,
-    )..repeat(reverse: true);
-
-    _scrollBounce = Tween<double>(begin: 0, end: 10).animate(
-      CurvedAnimation(
-        parent: _scrollIndicatorController,
-        curve: Curves.easeInOut,
-      ),
-    );
-
-    _fadeController.forward();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      if (MediaQuery.disableAnimationsOf(context)) {
+        _fadeController.value = 1;
+      } else {
+        _fadeController.forward();
+      }
+    });
   }
 
   @override
   void dispose() {
     _fadeController.dispose();
-    _scrollIndicatorController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ParticleBackground(
-      child: ResponsiveLayout(
-        mobile: _buildMobileHero(),
-        desktop: _buildDesktopHero(),
+    return RepaintBoundary(
+      child: DecoratedBox(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppColors.background, AppColors.surfaceDark],
+          ),
+        ),
+        child: ResponsiveLayout(
+          mobile: _buildMobileHero(),
+          desktop: _buildDesktopHero(),
+        ),
       ),
     );
   }
@@ -193,7 +192,7 @@ class _HeroSectionState extends State<HeroSection>
             const SizedBox(width: 8),
             Text(
               'Welcome to my portfolio',
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: AppColors.primary,
@@ -208,18 +207,15 @@ class _HeroSectionState extends State<HeroSection>
   Widget _buildName({double fontSize = 72}) {
     return FadeTransition(
       opacity: _nameFade,
-      child: ShaderMask(
-        shaderCallback: (bounds) => AppColors.nameGradient.createShader(bounds),
-        child: Text(
+      child: Text(
           'AHMED TAMER\nAHMED',
-          style: GoogleFonts.poppins(
+          style: TextStyle(
             fontSize: fontSize,
             fontWeight: FontWeight.w900,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             height: 1.05,
             letterSpacing: 2,
           ),
-        ),
       ),
     );
   }
@@ -229,7 +225,7 @@ class _HeroSectionState extends State<HeroSection>
       opacity: _titleFade,
       child: Text(
         'Mobile Software Engineer',
-        style: GoogleFonts.poppins(
+        style: TextStyle(
           fontSize: fontSize,
           fontWeight: FontWeight.bold,
           color: AppColors.primary,
@@ -243,7 +239,7 @@ class _HeroSectionState extends State<HeroSection>
       opacity: _bioFade,
       child: Text(
         'Mobile Software Engineer specialized in building production-grade Flutter applications with Clean Architecture, modular systems, and CI/CD workflows across Android and iOS.',
-        style: GoogleFonts.poppins(
+        style: TextStyle(
           fontSize: 16,
           color: AppColors.textSecondary,
           height: 1.6,
@@ -293,51 +289,20 @@ class _HeroSectionState extends State<HeroSection>
           height: size,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.3),
-                blurRadius: 60,
-                spreadRadius: 5,
-              ),
-            ],
+            border: Border.all(color: AppColors.primary, width: 3),
           ),
           child: Stack(
             alignment: Alignment.center,
             children: [
-              // Outer glow ring
-              Container(
-                width: size,
-                height: size,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: SweepGradient(
-                    colors: [
-                      AppColors.primary,
-                      AppColors.primary.withValues(alpha: 0.2),
-                      AppColors.primary.withValues(alpha: 0),
-                      AppColors.primary.withValues(alpha: 0.2),
-                      AppColors.primary,
-                    ],
-                  ),
-                ),
-              ),
-              // Dark inner circle
-              Container(
-                width: size - 12,
-                height: size - 12,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.background,
-                ),
-              ),
               // Profile image
               ClipOval(
                 child: SizedBox(
-                  width: size - 24,
-                  height: size - 24,
+                  width: size - 8,
+                  height: size - 8,
                   child: Image.asset(
                     'assets/images/profile.jpg',
                     fit: BoxFit.cover,
+                    cacheWidth: size >= 250 ? 600 : 360,
                     errorBuilder: (context, error, stackTrace) => Container(
                       color: AppColors.cardBackground,
                       child: Icon(
@@ -357,45 +322,37 @@ class _HeroSectionState extends State<HeroSection>
   }
 
   Widget _buildScrollIndicator() {
-    return AnimatedBuilder(
-      animation: _scrollBounce,
-      builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(0, _scrollBounce.value),
-          child: Column(
-            children: [
-              Text(
-                'Scroll to explore',
-                style: GoogleFonts.poppins(
-                  fontSize: 12,
-                  color: AppColors.textMuted,
-                  letterSpacing: 1.5,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Container(
-                width: 24,
-                height: 40,
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.textMuted, width: 2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 6),
-                    child: Icon(
-                      Icons.circle,
-                      size: 6,
-                      color: AppColors.textMuted,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+    return Column(
+      children: [
+        Text(
+          'Scroll to explore',
+          style: TextStyle(
+            fontSize: 12,
+            color: AppColors.textMuted,
+            letterSpacing: 1.5,
           ),
-        );
-      },
+        ),
+        const SizedBox(height: 8),
+        Container(
+          width: 24,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.textMuted, width: 2),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: EdgeInsets.only(top: 6),
+              child: Icon(
+                Icons.circle,
+                size: 6,
+                color: AppColors.textMuted,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -457,7 +414,7 @@ class _HeroButtonState extends State<_HeroButton> {
             children: [
               Text(
                 widget.label,
-                style: GoogleFonts.poppins(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: widget.isPrimary

@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../utils/constants.dart';
 import '../utils/responsive_layout.dart';
@@ -89,7 +88,11 @@ class _SkillsSectionState extends State<SkillsSection>
   void _onVisibilityChanged(VisibilityInfo info) {
     if (info.visibleFraction > 0.2 && !_hasAnimated) {
       _hasAnimated = true;
-      _progressController.forward();
+      if (MediaQuery.disableAnimationsOf(context)) {
+        _progressController.value = 1;
+      } else {
+        _progressController.forward();
+      }
     }
   }
 
@@ -126,7 +129,7 @@ class _SkillsSectionState extends State<SkillsSection>
       children: [
         Text(
           'Technical Expertise',
-          style: GoogleFonts.poppins(
+          style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
@@ -216,7 +219,7 @@ class _SkillsSectionState extends State<SkillsSection>
           const SizedBox(height: 16),
           Text(
             skill['name'] as String,
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
               color: AppColors.textSecondary,
@@ -286,7 +289,7 @@ class _CategoryTabState extends State<_CategoryTab> {
               const SizedBox(width: 8),
               Text(
                 widget.label,
-                style: GoogleFonts.poppins(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: widget.isSelected
@@ -331,7 +334,7 @@ class _CircularProgress extends StatelessWidget {
               ),
               Text(
                 '${(animatedPercent * 100).toInt()}%',
-                style: GoogleFonts.poppins(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: AppColors.primary,

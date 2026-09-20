@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../utils/constants.dart';
 import '../utils/responsive_layout.dart';
 
@@ -53,8 +52,6 @@ class _NavBarState extends State<NavBar> {
             children: [
               // Only show key nav items on desktop
               ..._buildDesktopNavItems(),
-              const SizedBox(width: 20),
-              _buildThemeToggle(),
             ],
           ),
         ],
@@ -86,7 +83,7 @@ class _NavBarState extends State<NavBar> {
             onTap: () => widget.onNavTap(index),
             child: Text(
               label,
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
                 color: isActive || isHovered
@@ -117,7 +114,7 @@ class _NavBarState extends State<NavBar> {
               child: Center(
                 child: Text(
                   'A',
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.background,
@@ -128,7 +125,7 @@ class _NavBarState extends State<NavBar> {
             const SizedBox(width: 10),
             Text(
               'Ahmed.',
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
@@ -136,22 +133,6 @@ class _NavBarState extends State<NavBar> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildThemeToggle() {
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColors.border, width: 1),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: const Icon(
-        Icons.wb_sunny_outlined,
-        color: AppColors.textSecondary,
-        size: 20,
       ),
     );
   }
@@ -205,7 +186,7 @@ class _NavBarState extends State<NavBar> {
               (index) => ListTile(
                 title: Text(
                   _navItems[index],
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: widget.currentIndex == index

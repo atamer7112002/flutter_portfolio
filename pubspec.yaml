@@ -1,5 +1,5 @@
 name: flutter_portfolio
-description: "A new Flutter project."
+description: "Ahmed Tamer's performance-focused Flutter Web portfolio."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -31,8 +31,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.8
-  google_fonts: ^6.2.1
   url_launcher: ^6.3.1
   font_awesome_flutter: ^10.7.0
   visibility_detector: ^0.4.0+2

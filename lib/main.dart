@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'utils/constants.dart';
 import 'widgets/navbar.dart';
 import 'sections/hero_section.dart';
@@ -21,16 +20,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ahmed Tamer — Flutter Developer',
+      title: 'Ahmed Tamer — Mobile Software Engineer',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: AppColors.primary,
         scaffoldBackgroundColor: AppColors.background,
-        textTheme: GoogleFonts.poppinsTextTheme(
-          Theme.of(context).textTheme.apply(
-            bodyColor: AppColors.textPrimary,
-            displayColor: AppColors.textPrimary,
-          ),
+        fontFamily: 'Arial',
+        textTheme: Theme.of(context).textTheme.apply(
+          bodyColor: AppColors.textPrimary,
+          displayColor: AppColors.textPrimary,
         ),
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppColors.primary,
@@ -54,7 +52,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
   final List<GlobalKey> _sectionKeys = List.generate(8, (_) => GlobalKey());
-  int _currentSection = 0;
+  final ValueNotifier<int> _currentSection = ValueNotifier(0);
+  bool _scrollCheckScheduled = false;
 
   @override
   void initState() {
@@ -66,23 +65,27 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
+    _currentSection.dispose();
     super.dispose();
   }
 
   void _onScroll() {
-    for (int i = _sectionKeys.length - 1; i >= 0; i--) {
-      final key = _sectionKeys[i];
-      if (key.currentContext != null) {
-        final box = key.currentContext!.findRenderObject() as RenderBox;
-        final position = box.localToGlobal(Offset.zero);
-        if (position.dy <= 150) {
-          if (_currentSection != i) {
-            setState(() => _currentSection = i);
+    if (_scrollCheckScheduled) return;
+    _scrollCheckScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollCheckScheduled = false;
+      if (!mounted) return;
+      for (int i = _sectionKeys.length - 1; i >= 0; i--) {
+        final renderObject = _sectionKeys[i].currentContext?.findRenderObject();
+        if (renderObject is RenderBox &&
+            renderObject.localToGlobal(Offset.zero).dy <= 150) {
+          if (_currentSection.value != i) {
+            _currentSection.value = i;
           }
           break;
         }
       }
-    }
+    });
   }
 
   void _scrollToSection(int index) {
@@ -108,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                 _buildKeyedSection(
                   0,
                   HeroSection(
-                    onViewWork: () => _scrollToSection(6),
+                    onViewWork: () => _scrollToSection(3),
                     onContact: () => _scrollToSection(7),
                   ),
                 ),
@@ -126,9 +129,12 @@ class _HomePageState extends State<HomePage> {
             top: 0,
             left: 0,
             right: 0,
-            child: NavBar(
-              onNavTap: _scrollToSection,
-              currentIndex: _currentSection,
+            child: ValueListenableBuilder<int>(
+              valueListenable: _currentSection,
+              builder: (context, currentSection, _) => NavBar(
+                onNavTap: _scrollToSection,
+                currentIndex: currentSection,
+              ),
             ),
           ),
         ],

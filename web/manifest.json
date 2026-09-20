@@ -1,12 +1,11 @@
 {
-    "name": "flutter_portfolio",
-    "short_name": "flutter_portfolio",
+    "name": "Ahmed Tamer Portfolio",
+    "short_name": "Ahmed Tamer",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "background_color": "#0a0a0f",
+    "theme_color": "#0a0a0f",
+    "description": "Mobile Software Engineer portfolio.",
     "prefer_related_applications": false,
     "icons": [
         {

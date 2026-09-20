@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -40,8 +39,8 @@ class _ContactSectionState extends State<ContactSection>
     {
       'icon': FontAwesomeIcons.github,
       'label': 'GitHub',
-      'value': 'atamer7112002',
-      'url': 'https://github.com/atamer7112002',
+      'value': 'a7medtamer7',
+      'url': 'https://github.com/a7medtamer7',
       'color': AppColors.secondary,
     },
     {
@@ -74,7 +73,11 @@ class _ContactSectionState extends State<ContactSection>
   void _onVisibilityChanged(VisibilityInfo info) {
     if (info.visibleFraction > 0.15 && !_hasAnimated) {
       _hasAnimated = true;
-      _controller.forward();
+      if (MediaQuery.disableAnimationsOf(context)) {
+        _controller.value = 1;
+      } else {
+        _controller.forward();
+      }
     }
   }
 
@@ -99,7 +102,7 @@ class _ContactSectionState extends State<ContactSection>
             Text(
               "I'm always open to discussing new projects, creative ideas, or\nopportunities to collaborate.",
               textAlign: TextAlign.center,
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary,
                 height: 1.6,
@@ -128,7 +131,7 @@ class _ContactSectionState extends State<ContactSection>
         children: [
           Text(
             'CONTACT',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
               letterSpacing: 3,
@@ -138,7 +141,7 @@ class _ContactSectionState extends State<ContactSection>
           const SizedBox(height: 12),
           Text(
             'Get In Touch',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
@@ -192,7 +195,7 @@ class _ContactSectionState extends State<ContactSection>
         children: [
           Text(
             "Let's Connect",
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: AppColors.secondary,
@@ -201,7 +204,7 @@ class _ContactSectionState extends State<ContactSection>
           const SizedBox(height: 12),
           Text(
             'Feel free to reach out through any of the channels below. I typically respond within 24 hours.',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 14,
               color: AppColors.textSecondary,
               height: 1.6,
@@ -261,7 +264,7 @@ class _ContactSectionState extends State<ContactSection>
                   children: [
                     Text(
                       'Send a Message',
-                      style: GoogleFonts.poppins(
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
@@ -269,7 +272,7 @@ class _ContactSectionState extends State<ContactSection>
                     ),
                     Text(
                       "I'll reply as soon as possible",
-                      style: GoogleFonts.poppins(
+                      style: TextStyle(
                         fontSize: 13,
                         color: AppColors.textMuted,
                       ),
@@ -328,7 +331,7 @@ class _ContactSectionState extends State<ContactSection>
                       const SizedBox(width: 10),
                       Text(
                         'Send Message',
-                        style: GoogleFonts.poppins(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
@@ -361,7 +364,7 @@ class _ContactSectionState extends State<ContactSection>
             const SizedBox(width: 8),
             Text(
               label,
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
                 color: AppColors.textSecondary,
@@ -373,13 +376,13 @@ class _ContactSectionState extends State<ContactSection>
         TextField(
           controller: controller,
           maxLines: maxLines,
-          style: GoogleFonts.poppins(
+          style: TextStyle(
             fontSize: 14,
             color: AppColors.textPrimary,
           ),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: GoogleFonts.poppins(
+            hintStyle: TextStyle(
               fontSize: 14,
               color: AppColors.textMuted,
             ),
@@ -420,7 +423,7 @@ class _ContactSectionState extends State<ContactSection>
         SnackBar(
           content: Text(
             'Please fill in all fields',
-            style: GoogleFonts.poppins(),
+            style: TextStyle(),
           ),
           backgroundColor: AppColors.cardBackground,
         ),
@@ -440,7 +443,7 @@ class _ContactSectionState extends State<ContactSection>
         const SizedBox(height: 30),
         Text(
           '© 2026 Ahmed Tamer Ahmed',
-          style: GoogleFonts.poppins(fontSize: 14, color: AppColors.textMuted),
+          style: TextStyle(fontSize: 14, color: AppColors.textMuted),
         ),
         const SizedBox(height: 8),
         Row(
@@ -448,7 +451,7 @@ class _ContactSectionState extends State<ContactSection>
           children: [
             Text(
               'Built with ',
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 13,
                 color: AppColors.textMuted,
               ),
@@ -456,7 +459,7 @@ class _ContactSectionState extends State<ContactSection>
             const Icon(Icons.flutter_dash, color: AppColors.primary, size: 18),
             Text(
               ' Flutter',
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primary,
@@ -536,14 +539,14 @@ class _HoverContactCardState extends State<_HoverContactCard> {
                   children: [
                     Text(
                       widget.label,
-                      style: GoogleFonts.poppins(
+                      style: TextStyle(
                         fontSize: 12,
                         color: AppColors.textMuted,
                       ),
                     ),
                     Text(
                       widget.value,
-                      style: GoogleFonts.poppins(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textPrimary,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../utils/constants.dart';
 import '../utils/responsive_layout.dart';
@@ -24,22 +23,16 @@ class _CertificationsSectionState extends State<CertificationsSection>
       'icon': '🎓',
     },
     {
-      'title': 'Flutter Development Certification',
+      'title': 'Flutter Certification',
       'issuer': 'Google Developer Student Clubs (GDSC)',
       'year': '2023',
       'icon': '🏆',
     },
     {
-      'title': 'Flutter Development Guide',
+      'title': 'Flutter Development Bootcamp',
       'issuer': 'Udemy',
       'year': '2023',
       'icon': '📱',
-    },
-    {
-      'title': 'Mobile Development (iOS)',
-      'issuer': 'Information Technology Institute (ITI)',
-      'year': '2022',
-      'icon': '📋',
     },
   ];
 
@@ -61,7 +54,11 @@ class _CertificationsSectionState extends State<CertificationsSection>
   void _onVisibilityChanged(VisibilityInfo info) {
     if (info.visibleFraction > 0.2 && !_hasAnimated) {
       _hasAnimated = true;
-      _controller.forward();
+      if (MediaQuery.disableAnimationsOf(context)) {
+        _controller.value = 1;
+      } else {
+        _controller.forward();
+      }
     }
   }
 
@@ -101,7 +98,7 @@ class _CertificationsSectionState extends State<CertificationsSection>
         children: [
           Text(
             'CERTIFICATIONS',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
               letterSpacing: 3,
@@ -111,7 +108,7 @@ class _CertificationsSectionState extends State<CertificationsSection>
           const SizedBox(height: 12),
           Text(
             'Professional Credentials',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
@@ -223,7 +220,7 @@ class _CertCardState extends State<_CertCard> {
                 children: [
                   Text(
                     widget.cert['title']!,
-                    style: GoogleFonts.poppins(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textPrimary,
@@ -234,7 +231,7 @@ class _CertCardState extends State<_CertCard> {
                   const SizedBox(height: 4),
                   Text(
                     widget.cert['issuer']!,
-                    style: GoogleFonts.poppins(
+                    style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
                       color: AppColors.primary,
@@ -252,7 +249,7 @@ class _CertCardState extends State<_CertCard> {
               ),
               child: Text(
                 widget.cert['year']!,
-                style: GoogleFonts.poppins(
+                style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: AppColors.primary,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -21,33 +20,40 @@ class _ProjectsSectionState extends State<ProjectsSection>
 
   final List<Map<String, dynamic>> _projects = [
     {
-      'title': 'Bay To Stay — Travel & Lifestyle',
+      'title': 'BayToStay — Travel & Booking',
       'description':
-          'Production-grade booking platform using Clean Architecture + MVVM. Features structured API layers with Dio & Retrofit, CI/CD workflows, Shorebird patches, and Unit Testing.',
-      'tech': ['Flutter', 'MVVM', 'Cubit', 'Dio', 'Retrofit', 'Shorebird'],
+          'Production booking platform managing 500+ tourism units. Owned maps, payments and wallet, deep links, push notifications, performance profiling, and production hot-fixes.',
+      'tech': ['Flutter', 'MVVM', 'FCM', 'CI/CD', 'Shorebird'],
       'category': 'Flutter',
       'badge': 'Production',
       'badgeColor': AppColors.badgePurple,
       'icon': Icons.travel_explore,
       'iconColor': AppColors.badgePurple,
       'github': null,
+      'android':
+          'https://play.google.com/store/apps/details?id=com.runsoft.bay_to_stay',
+      'ios': 'https://apps.apple.com/eg/app/bay-to-stay/id6743452055',
     },
     {
       'title': 'Masane3 Online — B2B Marketplace',
       'description':
-          'Large-scale marketplace platform built within a monorepo structure. Includes secure environment management with Envied and automated configuration switching for staging/production.',
-      'tech': ['Flutter', 'Monorepo', 'Envied', 'Clean Architecture'],
+          'Large-scale B2B marketplace built in a monorepo, with scalable networking, robust error handling, BLoC-driven supplier and catalog flows, and automated environment switching.',
+      'tech': ['Flutter', 'BLoC', 'Monorepo', 'Envied'],
       'category': 'Flutter',
       'badge': 'Production',
       'badgeColor': AppColors.badgeCyan,
       'icon': Icons.shopping_bag,
       'iconColor': AppColors.badgeCyan,
       'github': null,
+      'android':
+          'https://play.google.com/store/apps/details?id=com.ValuxApps.Masane3Online',
+      'ios':
+          'https://apps.apple.com/eg/app/%D9%85%D8%B5%D8%A7%D9%86%D8%B9-%D8%A7%D9%88%D9%86%D9%84%D8%A7%D9%8A%D9%86/id1453506308',
     },
     {
       'title': 'FinTrackr | Secure Financial SMS Sync',
       'description':
-          'Secure financial application using Clean Architecture and BLoC. Integrated native platform features via Method Channels for background processing and SMS handling with Biometric Auth.',
+          'Personal finance app that reads and categorizes financial SMS via native Android Method Channels, handles background detection, and protects financial data with biometric authentication.',
       'tech': ['Flutter', 'BLoC', 'Method Channels', 'Biometric Auth'],
       'category': 'Flutter',
       'badge': 'Security',
@@ -114,7 +120,11 @@ class _ProjectsSectionState extends State<ProjectsSection>
   void _onVisibilityChanged(VisibilityInfo info) {
     if (info.visibleFraction > 0.15 && !_hasAnimated) {
       _hasAnimated = true;
-      _controller.forward();
+      if (MediaQuery.disableAnimationsOf(context)) {
+        _controller.value = 1;
+      } else {
+        _controller.forward();
+      }
     }
   }
 
@@ -155,7 +165,7 @@ class _ProjectsSectionState extends State<ProjectsSection>
       children: [
         Text(
           'FEATURED PROJECTS',
-          style: GoogleFonts.poppins(
+          style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
             letterSpacing: 3,
@@ -165,7 +175,7 @@ class _ProjectsSectionState extends State<ProjectsSection>
         const SizedBox(height: 12),
         Text(
           'Selected works from my journey',
-          style: GoogleFonts.poppins(
+          style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
@@ -218,10 +228,11 @@ class _ProjectsSectionState extends State<ProjectsSection>
         crossAxisCount: crossAxisCount,
         crossAxisSpacing: 24,
         mainAxisSpacing: 24,
-        childAspectRatio: Responsive.getValue(
+        mainAxisExtent: Responsive.getValue(
           context,
-          mobile: 1.2,
-          desktop: 0.78,
+          mobile: 500,
+          tablet: 520,
+          desktop: 510,
         ),
       ),
       itemCount: projects.length,
@@ -286,7 +297,7 @@ class _FilterChipState extends State<_FilterChip> {
               const SizedBox(width: 8),
               Text(
                 widget.label,
-                style: GoogleFonts.poppins(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: widget.isSelected
@@ -394,7 +405,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                   ),
                   child: Text(
                     project['badge'] as String,
-                    style: GoogleFonts.poppins(
+                    style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                       color: project['badgeColor'] as Color,
@@ -425,7 +436,7 @@ class _ProjectCardState extends State<_ProjectCard> {
             // Title
             Text(
               project['title'] as String,
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
@@ -436,7 +447,7 @@ class _ProjectCardState extends State<_ProjectCard> {
             Flexible(
               child: Text(
                 project['description'] as String,
-                style: GoogleFonts.poppins(
+                style: TextStyle(
                   fontSize: 13,
                   color: AppColors.textSecondary,
                   height: 1.6,
@@ -463,7 +474,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                   ),
                   child: Text(
                     tech,
-                    style: GoogleFonts.poppins(
+                    style: TextStyle(
                       fontSize: 11,
                       color: AppColors.textMuted,
                       fontWeight: FontWeight.w500,
@@ -472,8 +483,60 @@ class _ProjectCardState extends State<_ProjectCard> {
                 );
               }).toList(),
             ),
+            if (project['android'] != null || project['ios'] != null) ...[
+              const SizedBox(height: 18),
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: [
+                  if (project['android'] != null)
+                    _StoreButton(
+                      label: 'Google Play',
+                      icon: Icons.android,
+                      url: project['android'] as String,
+                    ),
+                  if (project['ios'] != null)
+                    _StoreButton(
+                      label: 'App Store',
+                      icon: Icons.apple,
+                      url: project['ios'] as String,
+                    ),
+                ],
+              ),
+            ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _StoreButton extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final String url;
+
+  const _StoreButton({
+    required this.label,
+    required this.icon,
+    required this.url,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton.icon(
+      onPressed: () async {
+        final uri = Uri.parse(url);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        }
+      },
+      icon: Icon(icon, size: 17),
+      label: Text(label),
+      style: OutlinedButton.styleFrom(
+        foregroundColor: AppColors.textPrimary,
+        side: const BorderSide(color: AppColors.borderLight),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       ),
     );
   }

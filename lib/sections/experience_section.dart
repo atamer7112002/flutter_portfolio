@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../utils/constants.dart';
 import '../utils/responsive_layout.dart';
@@ -19,56 +18,42 @@ class _ExperienceSectionState extends State<ExperienceSection>
   final List<Map<String, dynamic>> _experiences = [
     {
       'title': 'Mobile Software Engineer',
-      'company': 'Runsoft',
+      'company': 'RunSoft',
       'period': 'Feb 2026 – Present',
       'location': 'Cairo, Egypt',
       'description':
-          'Contributing to the development of large-scale production mobile systems and scalable feature planning.',
+          'Shipping BayToStay and Masane3 Online across Google Play and the App Store.',
       'achievements': [
-        'Implementing structured networking layers with robust error handling and type-safe environment configurations using Envied',
-        'Working within a monorepo architecture supporting multiple applications across shared and feature-specific modules',
-        'Contributing to CI/CD workflows and automated release pipelines to streamline production delivery',
-        'Performing performance optimization and runtime improvements to enhance stability at scale',
-        'Participating in code reviews and modular refactoring to uphold code quality',
+        'Build structured networking layers with robust error handling and type-safe Envied configurations',
+        'Work in a monorepo supporting multiple apps across shared and feature-specific modules',
+        'Own Android and iOS release cycles including TestFlight, staged rollouts, CI/CD, and Shorebird hot-fixes',
+        'Use Sentry and Crashlytics to monitor production errors and performance bottlenecks',
       ],
     },
     {
-      'title': 'Freelance Mobile Developer',
+      'title': 'Mobile Developer',
       'company': 'Forsova',
       'period': 'Jan 2026 – Present',
       'location': 'Remote / UAE',
       'description':
-          'Developing Flutter mobile applications using Clean Architecture and BLoC/Cubit.',
+          'Delivering end-to-end Flutter projects with Clean Architecture, BLoC/Cubit, and Firebase.',
       'achievements': [
-        'Collaborated with clients to gather requirements and deliver scalable solutions',
-        'Built responsive UI and integrated REST APIs with focus on maintainability',
-        'Managed end-to-end delivery including testing, feedback integration, and deployment',
+        'Built FinTrackr with native Android SMS reading through Method Channels',
+        'Implement Firebase Auth, Firestore, and Functions independently',
+        'Manage development, testing, client feedback, and deployment while maintaining a 5-star Mustaqil rating',
       ],
     },
     {
       'title': 'Flutter Developer Intern',
-      'company': 'راصد – RASID',
+      'company': 'RASID',
       'period': 'May 2024 – Sep 2024',
       'location': 'Giza, Egypt',
       'description':
           'Contributed to an enterprise workforce management mobile application used in production.',
       'achievements': [
-        'Implemented scalable features using Flutter, BLoC/Cubit, and RESTful APIs',
-        'Integrated Firebase services including Authentication and Firestore',
-        'Collaborated with backend developers and UI/UX designers in an Agile environment',
-      ],
-    },
-    {
-      'title': 'Flutter Developer',
-      'company': 'Google Developer Student Clubs (GDSC)',
-      'period': 'Mar 2023 – Sep 2023',
-      'location': 'Suez Canal University',
-      'description':
-          'Completed intensive Flutter development training covering Clean Architecture and best practices.',
-      'achievements': [
-        'Completed intensive Flutter training covering Clean Architecture and state management',
-        'Built multiple mobile applications through hands-on project-based learning',
-        'Collaborated with peers on team-based development projects',
+        'Helped replace paper workflows with biometric clock-in/out and digital document submission',
+        'Integrated REST APIs with Dio, token refresh interceptors, and centralized error handling',
+        'Collaborated with backend developers and UX designers in an Agile team',
       ],
     },
   ];
@@ -91,7 +76,11 @@ class _ExperienceSectionState extends State<ExperienceSection>
   void _onVisibilityChanged(VisibilityInfo info) {
     if (info.visibleFraction > 0.15 && !_hasAnimated) {
       _hasAnimated = true;
-      _controller.forward();
+      if (MediaQuery.disableAnimationsOf(context)) {
+        _controller.value = 1;
+      } else {
+        _controller.forward();
+      }
     }
   }
 
@@ -128,7 +117,7 @@ class _ExperienceSectionState extends State<ExperienceSection>
       children: [
         Text(
           'EXPERIENCE',
-          style: GoogleFonts.poppins(
+          style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
             letterSpacing: 3,
@@ -138,7 +127,7 @@ class _ExperienceSectionState extends State<ExperienceSection>
         const SizedBox(height: 12),
         Text(
           'My Journey',
-          style: GoogleFonts.poppins(
+          style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
@@ -265,7 +254,7 @@ class _ExperienceSectionState extends State<ExperienceSection>
             ),
             child: Text(
               exp['period'] as String,
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primary,
@@ -276,7 +265,7 @@ class _ExperienceSectionState extends State<ExperienceSection>
           // Title
           Text(
             exp['title'] as String,
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
@@ -286,7 +275,7 @@ class _ExperienceSectionState extends State<ExperienceSection>
           // Company
           Text(
             exp['company'] as String,
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
               color: AppColors.secondary,
@@ -296,7 +285,7 @@ class _ExperienceSectionState extends State<ExperienceSection>
           // Description
           Text(
             exp['description'] as String,
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 14,
               color: AppColors.textSecondary,
               height: 1.6,
@@ -322,7 +311,7 @@ class _ExperienceSectionState extends State<ExperienceSection>
                   Expanded(
                     child: Text(
                       achievement,
-                      style: GoogleFonts.poppins(
+                      style: TextStyle(
                         fontSize: 13,
                         color: AppColors.textSecondary,
                         height: 1.5,

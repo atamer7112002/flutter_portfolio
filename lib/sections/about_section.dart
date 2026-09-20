@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../utils/constants.dart';
@@ -35,7 +34,11 @@ class _AboutSectionState extends State<AboutSection>
   void _onVisibilityChanged(VisibilityInfo info) {
     if (info.visibleFraction > 0.2 && !_hasAnimated) {
       _hasAnimated = true;
-      _controller.forward();
+      if (MediaQuery.disableAnimationsOf(context)) {
+        _controller.value = 1;
+      } else {
+        _controller.forward();
+      }
     }
   }
 
@@ -77,7 +80,7 @@ class _AboutSectionState extends State<AboutSection>
         children: [
           Text(
             'ABOUT ME',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
               letterSpacing: 3,
@@ -87,7 +90,7 @@ class _AboutSectionState extends State<AboutSection>
           const SizedBox(height: 12),
           Text(
             'Get to know me better',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
@@ -124,7 +127,7 @@ class _AboutSectionState extends State<AboutSection>
               children: [
                 Text(
                   'Who I Am',
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
@@ -133,8 +136,8 @@ class _AboutSectionState extends State<AboutSection>
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'Mobile Software Engineer with proven experience building and shipping production-grade Flutter applications on Google Play and the App Store. Specialized in Clean Architecture, modular system design, and CI/CD workflows, with hands-on experience in monorepo architectures, performance optimization, and full release engineering across Android and iOS.',
-                  style: GoogleFonts.poppins(
+                  'Mobile Software Engineer with 2+ years of experience shipping production Flutter applications used by thousands of people on Google Play and the App Store. I specialize in modular and monorepo architecture, performance profiling, native integrations, and Android/iOS release pipelines.',
+                  style: TextStyle(
                     fontSize: 16,
                     color: AppColors.textSecondary,
                     height: 1.8,
@@ -170,7 +173,7 @@ class _AboutSectionState extends State<AboutSection>
       children: [
         Text(
           'Who I Am',
-          style: GoogleFonts.poppins(
+          style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
@@ -179,8 +182,8 @@ class _AboutSectionState extends State<AboutSection>
         ),
         const SizedBox(height: 16),
         Text(
-          'Mobile Software Engineer with proven experience building and shipping production-grade Flutter applications on Google Play and the App Store. Specialized in Clean Architecture, modular system design, and CI/CD workflows.',
-          style: GoogleFonts.poppins(
+          'Mobile Software Engineer with 2+ years of experience shipping production Flutter applications used by thousands of people. I focus on architecture, native integrations, performance, and reliable Android/iOS releases.',
+          style: TextStyle(
             fontSize: 15,
             color: AppColors.textSecondary,
             height: 1.8,
@@ -226,7 +229,7 @@ class _AboutSectionState extends State<AboutSection>
               const SizedBox(width: 8),
               Text(
                 badge['label'] as String,
-                style: GoogleFonts.poppins(
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
                   color: AppColors.textSecondary,
@@ -262,7 +265,7 @@ class _AboutSectionState extends State<AboutSection>
             const SizedBox(width: 10),
             Text(
               'Download My CV',
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 color: AppColors.background,
@@ -276,10 +279,10 @@ class _AboutSectionState extends State<AboutSection>
 
   Widget _buildStatsGrid({bool isMobile = false}) {
     final stats = [
-      {'value': '10+', 'label': 'Projects Delivered'},
+      {'value': '500+', 'label': 'Tourism Units'},
       {'value': '2+', 'label': 'Years Experience'},
-      {'value': '25+', 'label': 'Technologies'},
-      {'value': '4', 'label': 'Certifications'},
+      {'value': '2', 'label': 'Live Store Apps'},
+      {'value': '5★', 'label': 'Mustaqil Rating'},
     ];
 
     return GridView.builder(
@@ -311,7 +314,7 @@ class _AboutSectionState extends State<AboutSection>
         children: [
           Text(
             stat['value']!,
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.bold,
               color: AppColors.primary,
@@ -320,7 +323,7 @@ class _AboutSectionState extends State<AboutSection>
           const SizedBox(height: 8),
           Text(
             stat['label']!,
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 14,
               color: AppColors.textSecondary,
             ),
