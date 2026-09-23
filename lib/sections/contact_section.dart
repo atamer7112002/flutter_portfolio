@@ -221,7 +221,7 @@ class _ContactSectionState extends State<ContactSection>
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: _HoverContactCard(
-        icon: info['icon'] as IconData,
+        icon: info['icon'],
         label: info['label'] as String,
         value: info['value'] as String,
         color: info['color'] as Color,
@@ -480,7 +480,7 @@ class _ContactSectionState extends State<ContactSection>
 }
 
 class _HoverContactCard extends StatefulWidget {
-  final IconData icon;
+  final dynamic icon;
   final String label;
   final String value;
   final Color color;
@@ -530,7 +530,11 @@ class _HoverContactCardState extends State<_HoverContactCard> {
                   color: widget.color.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(widget.icon, color: widget.color, size: 20),
+                child: Center(
+                  child: widget.icon is FaIconData
+                      ? FaIcon(widget.icon as FaIconData, color: widget.color, size: 20)
+                      : Icon(widget.icon as IconData, color: widget.color, size: 20),
+                ),
               ),
               const SizedBox(width: 16),
               Expanded(

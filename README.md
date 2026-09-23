@@ -16,6 +16,12 @@ flutter run -d chrome
 flutter build web --release
 ```
 
+## Deploy
+
+```sh
+firebase deploy --only hosting
+```
+
 The site uses short, one-shot entrance transitions and honors the platform's
 reduced-motion preference. Continuous particle and scroll-indicator animations
 were intentionally removed to keep scrolling and idle rendering lightweight.
