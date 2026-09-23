@@ -63,9 +63,9 @@
     },
     {
       "name": "font_awesome_flutter",
-      "rootUri": "file:///Users/mohamedsalem/.pub-cache/hosted/pub.dev/font_awesome_flutter-11.0.0",
+      "rootUri": "file:///Users/mohamedsalem/.pub-cache/hosted/pub.dev/font_awesome_flutter-10.9.1",
       "packageUri": "lib/",
-      "languageVersion": "3.9"
+      "languageVersion": "3.0"
     },
     {
       "name": "leak_tracker",
