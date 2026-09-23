@@ -76,3 +76,8 @@ body{overflow-x:hidden}
 .hero-ring img{transform:perspective(900px) rotateY(-5deg) translateZ(10px);filter:grayscale(1) contrast(1.04) brightness(1.2) drop-shadow(16px 20px 12px rgba(23,31,38,.28));box-shadow:none;transition:transform .6s ease,filter .6s ease}
 .hero-ring img:hover{transform:perspective(900px) rotateY(-1deg) translateZ(18px);filter:grayscale(1) contrast(1.04) brightness(1.24) drop-shadow(20px 24px 14px rgba(23,31,38,.3))}
 @media(max-width:800px){.hero-ring{transform:none}.hero-ring img{transform:perspective(700px) rotateY(-3deg) translateZ(6px)}}
+
+/* Render the supplied portrait exactly at its native 400px resolution. */
+.hero-ring{width:400px;max-width:100%;filter:none;transform:none}
+.hero-ring img,.hero-ring img:hover{width:400px;max-width:100%;height:auto;aspect-ratio:1;filter:none;transform:none;border-radius:0;box-shadow:none;transition:none}
+.hero-ring:before,.hero-ring:after{content:none}
