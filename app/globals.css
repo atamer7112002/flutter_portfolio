@@ -79,5 +79,5 @@ body{overflow-x:hidden}
 
 /* Render the supplied portrait exactly at its native 400px resolution. */
 .hero-ring{width:400px;max-width:100%;filter:none;transform:none}
-.hero-ring img,.hero-ring img:hover{width:400px;max-width:100%;height:auto;aspect-ratio:1;filter:none;transform:none;border-radius:0;box-shadow:none;transition:none}
+.hero-ring img,.hero-ring img:hover{width:400px;max-width:100%;height:auto;aspect-ratio:1;filter:none;transform:none;border-radius:50%;box-shadow:0 18px 32px rgba(28,38,47,.18),0 0 0 8px rgba(255,255,255,.78),0 0 0 9px rgba(213,220,225,.9);transition:none}
 .hero-ring:before,.hero-ring:after{content:none}
