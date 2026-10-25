@@ -32,7 +32,7 @@ class _ContactSectionState extends State<ContactSection>
     {
       'icon': FontAwesomeIcons.linkedin,
       'label': 'LinkedIn',
-      'value': 'a7medtamer7',
+      'value': 'atamer7112002',
       'url': 'https://linkedin.com/in/a7medtamer7',
       'color': AppColors.primary,
     },
@@ -40,7 +40,7 @@ class _ContactSectionState extends State<ContactSection>
       'icon': FontAwesomeIcons.github,
       'label': 'GitHub',
       'value': 'a7medtamer7',
-      'url': 'https://github.com/a7medtamer7',
+      'url': 'https://github.com/atamer7112002',
       'color': AppColors.secondary,
     },
     {

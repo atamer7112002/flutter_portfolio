@@ -1,5 +1,5 @@
 export const profile = {
-  name: 'Ahmed Tamer Ahmed', role: 'Mobile Software Engineer', email: 'a.tamer7112002@gmail.com', phone: '+201028684980', location: 'Cairo, Egypt', linkedin: 'https://linkedin.com/in/a7medtamer7', github: 'https://github.com/a7medtamer7', portfolio: 'https://ahmed-tamer-portfolio.web.app',
+  name: 'Ahmed Tamer Ahmed', role: 'Mobile Software Engineer', email: 'a.tamer7112002@gmail.com', phone: '+201028684980', location: 'Cairo, Egypt', linkedin: 'https://linkedin.com/in/a7medtamer7', github: 'https://github.com/atamer7112002', portfolio: 'https://ahmed-tamer-portfolio.web.app',
   summary: 'Mobile Software Engineer with 2+ years of experience shipping production-grade Flutter applications used by thousands of users on Google Play and the App Store. Delivered BayToStay — a booking platform managing 500+ tourism units — with full ownership of Android & iOS release cycles including TestFlight, Staged Rollouts, and Shorebird hot-fixes. Specialized in Monorepo architecture, Performance Profiling, native integrations via Method Channels, and mobile distribution pipelines including Firebase App Distribution.',
 };
 
