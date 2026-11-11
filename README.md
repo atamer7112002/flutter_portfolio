@@ -3,6 +3,8 @@
 A performance-focused Flutter Web portfolio for Ahmed Tamer Ahmed, Mobile
 Software Engineer.
 
+[View Centerly in the published portfolio](https://atamer7112002.github.io/flutter_portfolio/#centerly)
+
 ## Run locally
 
 ```sh

@@ -12,6 +12,24 @@ export const experience = [
 export const projects = [
   { title: 'BayToStay', eyebrow: 'Travel & Booking Super App', description: 'Production booking platform managing 500+ tourism units. Clean Architecture + MVVM. Owned Maps integration, payment flows & wallet, Deep Links, GPU jank and Raster thread profiling, memory optimization, DNS and environment switching via Cloudflare, CI/CD, Dev/Prod flavors, Shorebird patches, Firebase Cloud Messaging, and real-time booking status updates.', tech: ['Flutter', 'Clean Architecture', 'MVVM', 'Maps', 'Payments', 'FCM', 'CI/CD', 'Shorebird'], badge: 'Production', date: '02/2026 – Present', links: [['Google Play', 'https://play.google.com/store/apps/details?id=com.runsoft.bay_to_stay'], ['App Store', 'https://apps.apple.com/eg/app/bay-to-stay/id6743452055']] },
   { title: 'Masane3 Online', eyebrow: 'B2B Marketplace Platform', description: 'Large-scale B2B platform built within a Monorepo using Clean Architecture. Handled full Staging & Production environment management with Envied, scalable networking and error handling, shared and feature-specific packages, and BLoC-based supplier and product catalog flows.', tech: ['Flutter', 'Clean Architecture', 'BLoC', 'Monorepo', 'Envied'], badge: 'Production', date: '02/2026 – Present', links: [['Google Play', 'https://play.google.com/store/apps/details?id=com.ValuxApps.Masane3Online'], ['App Store', 'https://apps.apple.com/eg/app/%D9%85%D8%B5%D8%A7%D9%86%D8%B9-%D8%A7%D9%88%D9%86%D9%84%D8%A7%D9%8A%D9%86/id1453506308']] },
+  {
+    title: 'Centerly',
+    eyebrow: 'Tutoring Operations Platform',
+    description: 'Arabic-first platform for independent tutoring teachers. The Flutter app brings schedules, groups, attendance, and collections into one place, while secretaries record daily operations in a React dashboard. Both apps share a Supabase backend with tenant-scoped access and monthly or per-session billing.',
+    tech: ['Flutter', 'Dart', 'React', 'TypeScript', 'Supabase'],
+    badge: 'Production',
+    date: '',
+    links: [
+      ['Teacher app source', 'https://github.com/Centerly-it/Centerly_mobile'],
+      ['Secretary web app', 'https://centerly-secretary.pages.dev/'],
+    ],
+    screenshots: [
+      { file: 'splash.jpg', label: 'Splash screen' },
+      { file: 'dashboard.png', label: 'Teacher dashboard' },
+      { file: 'groups.png', label: 'Group directory' },
+      { file: 'finance.png', label: 'Finance overview' },
+    ],
+  },
   { title: 'FinTrackr', eyebrow: 'Fintech / Personal Finance Tracker', description: 'Personal finance app that automatically reads and parses incoming financial SMS messages from banks and payment providers through native Android Method Channels, categorizes income, expense, and transfer transactions, handles background detection, and protects financial data with Biometric Authentication.', tech: ['Flutter', 'Clean Architecture', 'BLoC', 'Method Channels', 'SMS', 'Biometric Auth'], badge: 'Security', date: '01/2026 – 02/2026', links: [] },
   { title: 'Wahag Al-Elm App', eyebrow: 'Educational Mobile Application', description: 'Educational mobile application with reusable UI components and responsive layouts. Integrated REST APIs with a focus on performance, stability, and consistent theming.', tech: ['Flutter', 'REST APIs', 'Responsive UI', 'Theming'], badge: 'Education', date: '', links: [['GitHub', 'https://github.com/atamer7112002/wahag_elelm']] },
   { title: 'RASID Mobile App', eyebrow: 'Enterprise Workforce Management', description: 'Enterprise workforce management application using Clean Architecture, BLoC/Cubit, REST APIs, and Firebase services for biometric clock-in/out, authentication, real-time updates, and digital document workflows.', tech: ['Flutter', 'BLoC', 'Firebase', 'REST APIs'], badge: 'Enterprise', date: '05/2024 – 09/2024', links: [] },
