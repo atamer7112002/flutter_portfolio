@@ -49,9 +49,7 @@ export const projects = [
       { file: 'fintrackr/4.jpg', label: 'SIM sync results', width: 460, height: 1024 },
     ],
   },
-  { title: 'Wahag Al-Elm App', eyebrow: 'Educational Mobile Application', description: 'Educational mobile application with reusable UI components and responsive layouts. Integrated REST APIs with a focus on performance, stability, and consistent theming.', tech: ['Flutter', 'REST APIs', 'Responsive UI', 'Theming'], badge: 'Education', date: '', links: [['GitHub', 'https://github.com/atamer7112002/wahag_elelm']] },
   { title: 'RASID Mobile App', eyebrow: 'Enterprise Workforce Management', description: 'Enterprise workforce management application using Clean Architecture, BLoC/Cubit, REST APIs, and Firebase services for biometric clock-in/out, authentication, real-time updates, and digital document workflows.', tech: ['Flutter', 'BLoC', 'Firebase', 'REST APIs'], badge: 'Enterprise', date: '05/2024 – 09/2024', links: [] },
-  { title: 'Renting System App', eyebrow: 'Property Renting Utility', description: 'Property renting application with responsive UI, structured navigation, RESTful APIs for real-time property data, and Shared Preferences for local settings.', tech: ['Flutter', 'REST APIs', 'Shared Preferences'], badge: 'Utility', date: '', links: [['GitHub', 'https://github.com/atamer7112002/Renting_system_app']] },
 ];
 
 export const skillGroups = [
