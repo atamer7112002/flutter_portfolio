@@ -102,3 +102,7 @@ body{overflow-x:hidden}
   color: var(--muted);
   font-size: 10px;
 }
+
+.project-screenshots a:only-child {
+  grid-column: 1 / -1;
+}
